@@ -1,0 +1,39 @@
+{% extends 'main/base.html' %}
+
+{% block title %}{{ product.title | capfirst }}{% endblock %}
+
+{% block breadcrumb %}
+  <li class="breadcrumb-item"><a href="{% url 'products_list' %}" class="text-warning font-weight-bold">Products</a></li>
+  <li class="breadcrumb-item text-white">{{ product.title | capfirst }}</li>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+      <div class="col-md-2"></div>
+      <div class="col-md3">
+        <img src="{{ product.image.url }}">
+      </div>
+      <div class="col-md-5">
+        <h2>{{ product.title | capfirst }}</h2>
+        <p class="text-muted text-primary">{{ product.author }}</p>
+        <h5 class="text-muted">Description:</h5>
+        <p>{{ product.description | capfirst }}</p>
+        <p>Price: <span class="text-success">$</span> {{ product.price }}</p>
+        <p>Type: {{ product.typ | capfirst }}</p>
+
+        {% if product.available is True %}
+          <p class="text-success font-weight-bold">Available</p>
+          <a href="#" class="btn btn-success btn-block">Order</a>
+        {% else %}
+          <p class="text-danger">Not Available for now </p>
+          <a href="#" class="btn btn-secondary btn-block disabled">Can't order</a>
+        {% endif %}
+
+        {% if user.is_superuser %}
+          <a href="{% url 'product_edit' id=product.id slug=product.slug %}" class="btn btn-info btn-block ">Edit</a>
+          <a href="{% url 'product_delete' id=product.id slug=product.slug %}" class="btn btn-danger btn-block">Delete</a>
+        {% endif %}
+
+      </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,74 @@
+{% extends 'main/base.html' %}
+
+{% block title %}
+    {{ customer.name | capfirst }}
+{% endblock %}
+
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item">My Profile / </li>
+{% endblock %}
+
+
+{% block content %}
+        <a href="{% url 'customer_orders' id=customer.id %}">My Orders</a>
+        <div class="row">
+            <div class="col-md-3">
+                <div>
+                    <img src="{{ customer.image.url }}" style="width: 100%;">
+                </div>
+                <div>
+                    <h3 class="text-muted">My Information:</h3>
+                    <div>
+                        <p>
+                            <span class="font-weight-bold">Username: </span>{{ customer.user.username }}
+                        </p>
+                        <p>
+                            <span class="font-weight-bold">Email: </span>{{ customer.user.email }}
+                        </p>
+                        <p>
+                            <span class="font-weight-bold">Phone Number: </span>{{ customer.phone }}
+                        </p>
+                        {{ request.user.email }}
+                        <p>
+                            <span class="font-weight-bold">Created at: </span>{{ customer.created_at }}
+                        </p>
+                        <a href="{% url 'customer_settings' id=request.user.customer.id %}" class="btn btn-block btn-primary" style="width: 70%">Edit your information</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-1"></div>
+
+            <div class="col-md-7">
+                <h2 class="text-muted">Delivered Orders Only!</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Author</th>
+                            <th>Price</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for order in orders %}
+                            <tr>
+                                <td>{{ order.product.title | capfirst }}</td>
+                                <td>{{ order.product.author | capfirst }}</td>
+                                <td><span class="text-success">$ </span>{{ order.product.price }}</td>
+
+                                    {% if order.status == 'Pending' %}
+                                        <td class="text-info font-weight-bold">{{ order.status }}</td>
+                                    {% elif order.status == 'Out for delivery' %}
+                                        <td class="text-primary font-weight-bold">{{ order.status }}</td>
+                                    {% elif order.status == 'Delivered' %}
+                                        <td class="text-success font-weight-bold">{{ order.status }}</td>
+                                    {% endif %}
+                                </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+{% endblock %}

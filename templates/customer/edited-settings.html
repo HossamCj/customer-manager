@@ -1,0 +1,11 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Edited Succeed{% endblock %}
+
+{% block content %}
+    <div class="text-center">
+        <h3 class="text-muted">Edited Succeed :)</h3>
+        <p class="">Check your profile to the see the edited <a class="link-success text-info" href="{% url 'customer_home' id=request.user.customer.id %}">Information</a></p>
+
+    </div>
+{% endblock %}

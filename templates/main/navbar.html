@@ -1,0 +1,53 @@
+{% load static %}
+
+<style>
+  .hello-msg {
+    font-size: 20px;
+    color: #FFF;
+    margin-left: 20px;
+    text-decoration: none;
+  }
+  a:hover {
+    color: #CCC;
+  }
+
+</style>
+
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      {% if request.user.is_staff %}
+        <li class="nav-item active">
+          <a class="nav-link text-light" href="{% url 'dashboard' %}">Dashboard</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-light" href="{% url 'products_list' %}">Products</a>
+        </li>
+      {% elif request.user.is_authenticated %}
+        <li class="nav-item">
+          <a href="{% url 'customer_home' id=request.user.customer.id %}" class="nav-link text-white font-weight-bold">My Profile</a>
+        </li>
+        <li class="nav-item">
+          <a href="{% url 'products_list' %}" class="nav-link text-white font-weight-bold">Product</a>
+        </li>
+      {% endif %}
+
+    </ul>
+  </div>
+
+  {% if user.is_authenticated %}
+    <span class="hello-msg">Hello, {{ request.user }}</span>
+    <span>
+      <a href="{% url 'logout_all'  %} " class="hello-msg btn btn-secondary" style="text-decoration: none;">Logout</a>
+    </span>
+  {% else %}
+    <span>
+      <a href="{% url 'login_all' %}" class="hello-msg btn btn-success">Login</a>
+    </span>
+    <span>
+      <a href="{% url 'signup_customer' %}" class="hello-msg btn btn-primary" >Signup</a>
+    </span>
+  {% endif %}
+
+</nav>

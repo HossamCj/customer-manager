@@ -1,0 +1,41 @@
+{% extends 'main/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Signup{% endblock %}
+
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item">Signup</li>
+{% endblock %}
+
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="card card-body col-md-4">
+            <h2 class="card card-header text-center">Register</h2>
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+                {{ user_form.username | as_crispy_field }}
+                {{ user_form.email | as_crispy_field }}
+                {{ user_form.password1 | as_crispy_field }}
+                {{ user_form.password2 | as_crispy_field }}
+
+                <input type="submit" class="btn btn-block btn-primary" value="Signup" />
+                <hr>
+                <div class="text-muted text-center">
+                    Already registered, then <a href="{% url 'login_all' %}">Login</a>
+                </div>
+
+            </form>
+        </div>
+
+        <div class="col-md-4"></div>
+
+    </div>
+
+
+{% endblock %}

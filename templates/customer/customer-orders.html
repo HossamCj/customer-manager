@@ -1,0 +1,21 @@
+{% extends 'main/base.html' %}
+
+{% block title %}{{ request.user.customer.username | capfirst }}{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item">
+        <a href="{% url 'products_list' %}" class="text-warning">Products</a>
+    </li>
+    <li class="breadcrumb-item">My Orders</li>
+{% endblock %}
+
+{% block content %}
+    <h2 class="text-center">My Orders</h2>
+    <div>
+        {% for order in orders %}
+            {% if order.product.title == order.product.title %}
+                <div>Product Ordered title: {{ order.product.title }} </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endblock %}

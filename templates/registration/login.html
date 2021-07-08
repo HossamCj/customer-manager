@@ -1,0 +1,42 @@
+{% extends 'main/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Login{% endblock %}
+
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item">Login</li>
+{% endblock %}
+
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-md-4"></div>
+
+        <div class="col-md-4 card card-body">
+            <h4 class="text-center">Login</h4>
+            <form method="POST">
+                {% csrf_token %}
+                <div>
+                    <input type="text" name="username" class="form-control" placeholder="Username">
+                </div>
+                <br>
+                <div>
+                    <input type="password" name="password" class="form-control" placeholder="Password">
+                </div>
+                <br>
+                {% for message in messages %}
+                    <div class="alert alert-success">
+                        <a class="close" href="#" data-dismiss="alert">×</a>
+                        {{ message }}
+                    </div>
+                {% endfor %}
+                <hr>
+                <input type="submit" value="Login" class="btn btn-primary btn-block" />
+            </form>
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+
+{% endblock %}

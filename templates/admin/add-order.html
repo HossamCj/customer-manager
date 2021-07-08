@@ -1,0 +1,20 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Add Order{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item">
+        <a href="{% url 'dashboard' %}" class="text-warning">Dashboard</a>
+    </li>
+    <li class="breadcrumb-item">Add Order</li>
+{% endblock %}
+
+{% block content %}
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        {{ form | crispy }}
+
+        <input type="submit" class="btn btn-primary" value="Add Order">
+    </form>
+{% endblock %}

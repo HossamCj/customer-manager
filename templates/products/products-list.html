@@ -1,0 +1,68 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Products list{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item text-white">Products /</li>
+{% endblock %}
+
+{% block content %}
+        {% if user.is_staff %}
+            <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6 text-center">
+               <a href="{% url 'product_add' %}" class="btn btn-primary btn-block">ADD PRODUCT</a>
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+        <hr>
+        {% endif %}
+
+        <div class="row">
+            {% for product in products %}
+               <div class="col-md-3 ">
+               </div>
+
+                <div class="card col-md-6 ">
+                    <div class="row">
+                        <div class="card-body col-md-4 ">
+                            <img src="{{ product.image.url }}" style="width: 120px;">
+                        </div>
+                        <div class="card-body col-md-8 ">
+                            <h4>
+                                <a href="{% url 'product_details' id=product.id slug=product.slug %}" class="text-primary">{{ product.title | capfirst }}</a>
+                            </h4>
+                            <p class="text-muted">{{ product.author | capfirst }}</p>
+                            <h6 class="text-muted">Description: </h6>
+                            <p>{{ product.description | capfirst }}</p>
+                            <p>Type: {{ product.typ | capfirst }}</p>
+                            <p>Price <span class="text-success">$ </span>{{ product.price }}</p>
+                            {% if product.available is True %}
+                                <p class="text-success font-weight-bold">Available</p>
+                            {% else %}
+                                <p class="text0danger">No Available</p>
+                                <a href="#" class="btn btn-block btn-secondary disabled">Can't order</a>
+                            {% endif %}
+
+                            {% if user.is_staff %}
+                                <a href="{% url 'product_edit' id=product.id slug=product.slug %}" class="btn btn-info ">Edit</a>
+                                <a href="{% url 'product_delete' id=product.id slug=product.slug %}" class="btn btn-danger">Delete</a>
+                            {% else %}
+                                <a href="{% url 'create_customer_order' id=product.id slug=product.slug %}" class="btn btn-success btn-block">Order now</a>
+                            {% endif %}
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3 "></div>
+            {% empty %}
+                <div class="col-md-4"></div>
+                <div class="col-md-4">
+                    <h2 class="text-center text-muted">No Products yet</h2>
+                </div>
+                <div class="col-md-4"></div>
+            {% endfor %}
+        </div>
+
+{% endblock %}
